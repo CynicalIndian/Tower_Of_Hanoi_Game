@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container" id="create_disk_form_container">
+      <div class="row">
+        <div class="col-sm-12">
+          <form class="form-inline " onsubmit="return start()">
+            <label for="no_of_disks">Enter the Number of disk(s) (Max : 11) : </label
+            >&nbsp;&nbsp;&nbsp;
+            <input
+              id="no_of_disks"
+              class="form-control mr-sm-2"
+              type="text"
+              aria-label="Number of Disks"
+              
+            />
+            <button class="btn btn-outline-success my-2 my-sm-0" >
+              Create Disk(s)
+            </button>
+          </form>
+        </div>
+      </div>
+    
+    <hr />
+    </div>
+    <div class="container-fluid">
+            <div class="row ">
+                    <div class="col-sm-8 col-lg-3 border text-center box-center ">       
+                        <h3>Tower A</h3>
+                    </div>  
+                    <div class="col-sm-8 col-lg-3 border text-center box-center ">
+                            <h3>Tower B</h3>
+                    </div>
+                    <div class="col-sm-8 col-lg-3 border text-center box-center ">
+                            <h3>Tower C</h3>
+                    </div>
+                </div>
+
+    </div>
+    <div class="container-fluid">
+        <div class="row  restrict-height">
+            <div class="col-sm-8 col-lg-3 border text-center box-center ">
+                    
+                <ul class="tower fluid-height restrict-width" id="tower-a">
+                   
+                </ul>
+                   
+                    
+                    
+            </div>  
+            
+            <div class="col-sm-8 col-lg-3 border text-center box-center ">
+                    
+                    <ul class="tower fluid-height restrict-width" id="tower-b">
+                            
+                    </ul>
+                    
+            </div>
+            <div class="col-sm-8 col-lg-3 border text-center box-center ">
+                   
+                    <ul class="tower fluid-height restrict-width" id="tower-c">
+                            
+                    </ul>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <br><br>
+    <div class="container ">
+            <div class="row">
+                <div class="col-sm-12 col-md-4 bottom-form">
+                          <form class="form-inline " onsubmit="return Move()">
+                                From :&nbsp;&nbsp;<input
+                                id="from_tower"
+                                class="form-control mr-sm-2 restrict-input-width"
+                                type="text"
+                                aria-label="source"
+                              />  
+                              To : &nbsp;&nbsp;
+                              <input
+                                id="to_tower"
+                                class="form-control mr-sm-2 restrict-input-width"
+                                type="text"
+                                aria-label="destination"
+                                />   
+                                
+                            <button  id="perform_move" class="btn btn-primary">Proceed</button>
+
+                            
+                          </form>
+                          
+                            
+                </div>
+                
+                    
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-4  bottom-form">
+                        <h3>Moves so far </h3> 
+                        <!-- <button class="btn btn-success" id="undo" onclick="Undo();">Undo </button> -->
+                        <hr>  
+                        <table class="table table-striped " id="MovesTable">
+                          <tr>
+                            <th>Source</th><th>Destination</th>
+                          </tr>
+                          
+                        </table>
+                </div>
+                
+            </div>
+    </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+   <script src="assets/js/hanoi.js"></script>
+   
+  </body>
+</html>
