@@ -1,13 +1,9 @@
-function TOH() 
-{
+function TOH() {
   towerA = document.getElementById("tower-a");
   towerB = document.getElementById("tower-b");
   towerC = document.getElementById("tower-c");
-  UndoStatus=-1;
-  // MoveCount = 0;
-  // UndoCount = 0;
-  // UndoCount=0;
-  // this.no_of_disks=no_of_disks;
+  UndoStatus = -1;
+
   towerA_Stack = new Array();
   towerB_Stack = new Array();
   towerC_Stack = new Array();
@@ -26,22 +22,12 @@ function TOH()
 
   sourceArray = new Array();
   destinationArray = new Array();
-  
-  // source="";
-  // destination="";
-  // tempDiskID = new Array();
 
-  this.isValidLimit = function(no_of_disks)
-   {
-      if (no_of_disks < 12) 
-          return true;
-      return false;
-   };
+  this.isValidLimit = function(no_of_disks) {
+    if (no_of_disks < 12) return true;
+    return false;
+  };
 
-  // this.createDisk=function(i)
-  // {
-
-  // }
   this.RandomColor = function() {
     var c = "#";
     for (var i = 0; i < 6; i++) {
@@ -56,20 +42,22 @@ function TOH()
     if (this.isValidLimit(no_of_disks)) {
       for (let i = 0; i < no_of_disks; i++) {
         towerA_Stack.push(i);
-        // tempDiskID.push(i);
         towerA = document.getElementById("tower-a");
         tempNode_LI = document.createElement("li");
         tempNode_LI.setAttribute("class", "disk");
 
         tempNode_Button = document.createElement("button");
         tempNode_Button.setAttribute("class", "btn");
+
+
         width = maxButtonWidth - 25 * i;
-        height =   -i;
+        height = -i;
         color = this.RandomColor();
+
+
         Tower_A_ColorArray.push(color);
         Tower_A_WidthArray.push(width);
 
-        // this.createDisk(i);
         tempNode_LI.setAttribute("id", "Disk_" + i);
         tempNode_Button.setAttribute(
           "style",
@@ -93,58 +81,29 @@ function TOH()
     }
   };
 
-  this.DetermineSourceDestinationArray = function(
-    source_tower,
-    destination_tower
-  ) {
-    // alert(source_tower);
-    // alert(destination_tower);
+  this.DetermineSourceDestinationArray = function(source_tower,destination_tower) {
     if (source_tower === "a" && destination_tower === "b") {
       tempSourceArray = Array.from(towerA_Stack);
 
       tempDestinationArray = Array.from(towerB_Stack);
-      //    console.log(tempSourceArray);
-      //    console.log(tempDestinationArray);
-      //    source="a";
-      //    destination="b";
     } else if (source_tower === "b" && destination_tower === "a") {
       tempSourceArray = Array.from(towerB_Stack);
 
       tempDestinationArray = Array.from(towerA_Stack);
-      // console.log(tempSourceArray);
-      // console.log(tempDestinationArray);
-      // source="b";
-      // destination="a";
     } else if (source_tower === "b" && destination_tower === "c") {
       tempSourceArray = Array.from(towerB_Stack);
 
       tempDestinationArray = Array.from(towerC_Stack);
-      // console.log(tempSourceArray);
-      // console.log(tempDestinationArray);
-      // source="b";
-      //    destination="c";
     } else if (source_tower === "c" && destination_tower === "b") {
       tempSourceArray = Array.from(towerC_Stack);
 
       tempDestinationArray = Array.from(towerB_Stack);
-      // console.log(tempSourceArray);
-      // console.log(tempDestinationArray);
-      // source="c";
-      //    destination="b";
     } else if (source_tower === "a" && destination_tower === "c") {
       tempSourceArray = Array.from(towerA_Stack);
       tempDestinationArray = Array.from(towerC_Stack);
-      // console.log(tempSourceArray);
-      // console.log(tempDestinationArray);
-      // source="a";
-      //    destination="c";
     } else if (source_tower === "c" && destination_tower === "a") {
       tempSourceArray = Array.from(towerC_Stack);
       tempDestinationArray = Array.from(towerA_Stack);
-      // console.log(tempSourceArray);
-      // console.log(tempDestinationArray);
-      // source="c";
-      //    destination="a";
     }
   };
 
@@ -169,9 +128,9 @@ function TOH()
 
   this.RecordMove = function(source_tower, destination_tower) {
     sourceArray.push(source_tower);
-    console.log(sourceArray);
+    // console.log(sourceArray);
     destinationArray.push(destination_tower);
-    console.log(destinationArray);
+    // console.log(destinationArray);
 
     this.DisplayMove(source_tower, destination_tower);
   };
@@ -192,7 +151,7 @@ function TOH()
     if (source_tower === "a") {
       tempID = towerA_Stack.pop();
       removedDisk = towerA.removeChild(towerA.lastChild);
-      // console.log(disk);
+
       tempColor = Tower_A_ColorArray.pop();
       tempWidth = Tower_A_WidthArray.pop();
     } else if (source_tower === "b") {
@@ -215,14 +174,8 @@ function TOH()
       destination_tower
     );
   };
-  this.AddToDestinationTower = function(
-    tempID,
-    tempColor,
-    tempWidth,
-    removedDisk,
-    source_tower,
-    destination_tower
-  ) {
+
+  this.AddToDestinationTower = function(tempID,tempColor,tempWidth,removedDisk,source_tower,destination_tower) {
     if (source_tower === "a") lChild = removedDisk;
     else if (source_tower === "b") lChild = removedDisk;
     else if (source_tower === "c") lChild = removedDisk;
@@ -245,25 +198,15 @@ function TOH()
     }
   };
 
-  this.MoveDisk = function(source_tower, destination_tower,UndoStatus) {
-    // alert(source_tower);
-    // alert(destination_tower);
-
+  this.MoveDisk = function(source_tower, destination_tower, UndoStatus) {
     this.DetermineSourceDestinationArray(source_tower, destination_tower);
     if (this.isValidMove(tempSourceArray, tempDestinationArray)) {
-      if(UndoStatus==-1)
-      {
+      if (UndoStatus == -1) {
         this.RecordMove(source_tower, destination_tower);
       }
-      // if(UndoCount==MoveCount && UndoStatus==1)
-      // {
-      //   document.getElementById("Undo").setAttribute("disabled","true");
-      //   alert("No more Undo(s) !");
-      // }
-      
 
       this.RemoveFromeSourceTower(source_tower, destination_tower);
-     
+
       tempSourceArray.splice(0, tempSourceArray.length);
       tempDestinationArray.splice(0, tempDestinationArray.length);
 
@@ -282,80 +225,49 @@ function TOH()
     var rowCount = table.rows.length;
 
     table.deleteRow(rowCount - 1);
-    // alert(rowCount);
-
-    // MoveSoFar.removeChild(MoveSoFar.lastChild);
   };
 
-  this.UndoMove=function(source,destination)
-  {
-    this.MoveDisk(source,destination,1);
+  this.UndoMove = function(source, destination) {
+    this.MoveDisk(source, destination, 1);
     this.UpdateMovesTable(UndoStatus);
   };
 }
-  // this.MoveDisk=function(source_tower,destination_tower)
-  // {
-  //     if(this.isValidMove(source_tower,destination_tower))
-  //     {
-  //         alert("True");
-  //     }
-  //     else
-  //     {
-  //         alert("false");
-  //     }
-  //     //  sourceArray=new Array();
-  //     //  destinationArray=new Array();
-
-  // }
 
 
-// document.getElementById("undo").setAttribute("disabled", "true");
 
 function start() {
   input_no_of_disks = document.getElementById("no_of_disks");
-  
+
   var n = parseInt(document.getElementById("no_of_disks").value);
-  if(isNaN(n))
-  {
+  if (isNaN(n)) {
     alert("Please provide an Integer !");
   }
-  toh = new TOH(n);
+  toh = new TOH();
   toh.CreateDisks(n);
 
-  // console.log(towerA_Stack);
   return false;
 }
 
 function Move() {
   source_tower = document.getElementById("from_tower").value;
-  // alert(source_tower);
+
   destination_tower = document.getElementById("to_tower").value;
-  // alert(destination_tower);
 
   if (source_tower == destination_tower) {
     alert(
       "Source and destination tower shouldn't be the same !!\nPlease Change them..."
     );
   } else {
-    toh.MoveDisk(source_tower, destination_tower,UndoStatus);
-    // MoveCount++;
-    
+    toh.MoveDisk(source_tower, destination_tower, UndoStatus);
   }
-  // document.getElementById("undo").removeAttribute("disabled");
 
   return false;
 }
 function Undo() {
-  var source=destinationArray[destinationArray.length-1];destinationArray.pop();
-  var destination=sourceArray[sourceArray.length-1];sourceArray.pop();
+  var source = destinationArray[destinationArray.length - 1];
+  destinationArray.pop();
+  var destination = sourceArray[sourceArray.length - 1];
+  sourceArray.pop();
 
-  toh.UndoMove(source,destination);
-  // UndoCount++;
-
-  // var source = destinationArray[destinationArray.length - 1];
-  // destinationArray.pop();
-  // var dest = sourceArray[sourceArray.length - 1];
-  // sourceArray.pop();
-  // toh.MoveDisk(source, dest);
-  // toh.UpdateMovesTable();
+  toh.UndoMove(source, destination);
 }
