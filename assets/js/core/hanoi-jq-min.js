@@ -47,7 +47,10 @@ RemoveRecord=function()
 {$("#MovesTable tr:last").remove()}
 UndoMove=function(src,des)
 {this.MoveDisk(src,des,1);this.RemoveRecord()}}
-$("#create-btn").click(function(){let n=parseInt($("#no_of_disks").val());toh=new TOH(n);toh.CreateDisks();toh.TowerObjectSet[0].TowerStack=Array.from(toh.DiskStack);toh.TowerObjectSet[0].UpdateTower();$("#no_of_disks").attr("disabled","true");$("#create-btn").attr("disabled","true");$("#restart").click(function(){window.location.reload()});return!1});$("#Move").click(function(){let source=(String($("#from").val()).toLowerCase());let destination=(String($("#to").val()).toLowerCase());if(source===""||destination==="")
+$("#create-btn").click(function(){let n=parseInt($("#no_of_disks").val());if(n>10)
+{alert("As of now limit is for 10 Disks !")}
+else{toh=new TOH(n);toh.CreateDisks();toh.TowerObjectSet[0].TowerStack=Array.from(toh.DiskStack);toh.TowerObjectSet[0].UpdateTower();$("#no_of_disks").attr("disabled","true");$("#create-btn").attr("disabled","true")}
+$("#restart").click(function(){window.location.reload()});return!1});$("#Move").click(function(){let source=(String($("#from").val()).toLowerCase());let destination=(String($("#to").val()).toLowerCase());if(source===""||destination==="")
 {alert("You can't proceed without providing \nSource & Destination")}
 else{toh.MoveDisk(source,destination,-1)}
 return!1});$("#Undo").click(function(){UndoCount++;let UndoDestination=ActionObject.SourceRecordArray[ActionObject.SourceRecordArray.length-1];let UndoSource=ActionObject.DestinationRecordArray[ActionObject.DestinationRecordArray.length-1];toh.UndoMove(UndoSource,UndoDestination);ActionObject.SourceRecordArray.pop();ActionObject.DestinationRecordArray.pop();TableRowCount--})
