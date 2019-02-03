@@ -10,3 +10,5 @@ Some of the glitches that I personally disliked are listed below
 4) Works only on chrome as it makes use of ES6 features supported only by chrome as of now ....
 
    and more to come from you ........... !
+   
+ It would be awesome to have good documentation !
