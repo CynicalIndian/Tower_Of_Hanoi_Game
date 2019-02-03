@@ -1,35 +1,44 @@
 let DiskID = -1;
 let TableRowCount = 0;
 let UndoCount = 0;
+let toh;
 
-class Disk {
-    constructor(Width = "280") {
+class Disk 
+{
+    constructor(Width = "280") 
+    {
         DiskID++;
         this.Color = this.GetRandomColor();
         this.Width = Width;
         this.ID = DiskID;
     }
-    GetRandomColor = function () {
+
+    GetRandomColor = function () 
+    {
         let letters = '0123456789ABCDEF';
         let color = '#';
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 6; i++) 
+        {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
     }
 }
 
-class ActionRecord {
+class ActionRecord 
+{
     SourceRecordArray = new Array();
     DestinationRecordArray = new Array();
     a; b;
-    RecordMove = function (a, b) {
+    RecordMove = function (a, b) 
+    {
         this.a = a; this.b = b;
         this.SourceRecordArray.push(this.a);
         this.DestinationRecordArray.push(this.b);
         this.UpdateMoveTable();
     }
-    UpdateMoveTable = function () {
+    UpdateMoveTable = function () 
+    {
         TableRowCount++;
         let MoveSoFar = document.getElementById("MovesTable");
         MoveSoFar.innerHTML =
@@ -42,34 +51,36 @@ class ActionRecord {
             "</tr>";
     }
 }
+
 let ActionObject = new ActionRecord();
 
-class Tower {
+class Tower 
+{
     TowerID;
     TowerStack = new Array();
-    constructor(TowerID) {
+    constructor(TowerID)
+    {
         this.TowerID = TowerID;
     }
-    UpdateTower = function () {
+    UpdateTower = function () 
+    {
 
-        for (let i = 0; i < this.TowerStack.length; i++) {
+        for (let i = 0; i < this.TowerStack.length; i++) 
+        {
             var s = $("#tower-" + this.TowerID);
             $(s).append("<li id='" + this.TowerStack[i].id + "'><button class='btn btn-round disk'\
              style='background-color:"+ this.TowerStack[i].color + ";width:" + this.TowerStack[i].width + "px;'></button></li> ");
-
-
         }
     }
 }
 
 
 
-
-
-
-class TOH {
+class TOH 
+{
     GivenSourceIndex; GivenDestinationIndex; RemovedDiskRecord;
-    constructor(No_Of_Disk) {
+    constructor(No_Of_Disk) 
+    {
         this.No_Of_Disk = No_Of_Disk;
     }
     DiskStack = new Array();
@@ -79,8 +90,10 @@ class TOH {
     C = new Tower(3);
     InitialStack = new Array();
     TowerObjectSet = [this.A, this.B, this.C];
-    CreateDisks = function () {
-        for (let i = 0; i < this.No_Of_Disk; i++) {
+    CreateDisks = function () 
+    {
+        for (let i = 0; i < this.No_Of_Disk; i++) 
+        {
             let CurrentDisk = new Disk();
             let CurrentDiskWidth = CurrentDisk.Width - (25 * i);
             this.DiskStack.push({
@@ -91,7 +104,8 @@ class TOH {
         }
         this.InitialStack = Array.from(this.DiskStack);
     }
-    GetSourceDestinationStack = function (from, to) {
+    GetSourceDestinationStack = function (from, to) 
+    {
 
         switch (from) {
             case "a": this.GivenSourceIndex = 0; break;
@@ -106,12 +120,13 @@ class TOH {
 
     }
 
-    isValidMove = function (from, to, UndoStatus) {
-        if (from === to) {
+    isValidMove = function (from, to, UndoStatus) 
+    {
+        if (from === to) 
+        {
             alert("Source & Destination Can't be Same");
         }
         this.GetSourceDestinationStack(from, to);
-
 
         this.SourceTowerStack = this.TowerObjectSet[this.GivenSourceIndex].TowerStack;
         this.DestinationTowerStack = this.TowerObjectSet[this.GivenDestinationIndex].TowerStack;
@@ -125,23 +140,20 @@ class TOH {
 
         var DiskID_List_B = e_Destination.map(function (el) { return el.id; });
 
-
-
-
-        if (this.SourceTowerStack.length == 0) {
+        if (this.SourceTowerStack.length == 0) 
+        {
             alert("Nothing to move from Tower '" + from + "' to Tower '" + to + "' !");
             return false;
         }
 
-        else if (UndoStatus == -1 && (parseInt(DiskID_List_A[DiskID_List_A.length - 1])) < (parseInt(DiskID_List_B[DiskID_List_B.length - 1]))) {
+        else if (UndoStatus == -1 && (parseInt(DiskID_List_A[DiskID_List_A.length - 1])) < (parseInt(DiskID_List_B[DiskID_List_B.length - 1]))) 
+        {
             alert("Invalid Move !");
             return false;
         }
         return true;
-
-
-
     }
+
     IsWin = function () {
         if (
             JSON.stringify(this.B.TowerStack) == JSON.stringify(this.InitialStack) ||
@@ -152,8 +164,10 @@ class TOH {
     }
 
 
-    MoveDisk = function (from, to, UndoStatus) {
-        if (this.isValidMove(from, to, UndoStatus)) {
+    MoveDisk = function (from, to, UndoStatus) 
+    {
+        if (this.isValidMove(from, to, UndoStatus)) 
+        {
 
             this.RemovedDiskRecord = this.TowerObjectSet[this.GivenSourceIndex].TowerStack.pop();
 
@@ -163,43 +177,40 @@ class TOH {
 
             $("#tower-" + (this.GivenDestinationIndex + 1)).empty();
             let e = (this.TowerObjectSet[this.GivenDestinationIndex].TowerStack);
-
-
-
             this.TowerObjectSet[this.GivenDestinationIndex].UpdateTower();
 
             if (UndoStatus == -1) {
                 ActionObject.RecordMove(from, to)
 
-
-                console.log(ActionObject.SourceRecordArray);
-                console.log(ActionObject.DestinationRecordArray);
+                // console.log(ActionObject.SourceRecordArray);
+                // console.log(ActionObject.DestinationRecordArray);
             }
-            if (this.IsWin()) {
-
+            if (this.IsWin()) 
+            {
                 $("#MovesForm").empty();
                 $("#MovesForm").html("<h3>You Did it in " + TableRowCount + " Moves With " + UndoCount + " Undo(s) !</h3>");
-
-
             }
-
-
         }
-        else {
+        else 
+        {
 
         }
     }
-    RemoveRecord = function () {
+
+    RemoveRecord = function () 
+    {
         $("#MovesTable tr:last").remove();
     }
-    UndoMove = function (src, des) {
+
+    UndoMove = function (src, des) 
+    {
         this.MoveDisk(src, des, 1);
         this.RemoveRecord();
     }
 
 }
 
-let toh;
+
 
 $("#create-btn").click(function () {
 
@@ -207,10 +218,10 @@ $("#create-btn").click(function () {
     toh = new TOH(n);
     toh.CreateDisks();
 
-
     toh.TowerObjectSet[0].TowerStack = Array.from(toh.DiskStack);
 
     toh.TowerObjectSet[0].UpdateTower();
+
     $("#no_of_disks").attr("disabled", "true");
     $("#create-btn").attr("disabled", "true");
 
@@ -219,6 +230,7 @@ $("#create-btn").click(function () {
     });
     return false;
 });
+
 $("#Move").click(function () {
     let source = (String($("#from").val()).toLowerCase());
 
@@ -233,26 +245,22 @@ $("#Move").click(function () {
         toh.MoveDisk(source, destination, -1);
     }
    
-
     return false;
 });
 
 $("#Undo").click(function () {
     UndoCount++;
+
     let UndoDestination = ActionObject.SourceRecordArray[ActionObject.SourceRecordArray.length - 1];
-
-
     let UndoSource = ActionObject.DestinationRecordArray[ActionObject.DestinationRecordArray.length - 1];
 
-    console.log(UndoSource);
-    console.log(UndoDestination);
+    // console.log(UndoSource);
+    // console.log(UndoDestination);
 
     toh.UndoMove(UndoSource, UndoDestination);
     ActionObject.SourceRecordArray.pop();
     ActionObject.DestinationRecordArray.pop();
     TableRowCount--;
-
-
 });
 
 
