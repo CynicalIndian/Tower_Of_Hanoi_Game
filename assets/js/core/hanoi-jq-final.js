@@ -215,15 +215,23 @@ class TOH
 $("#create-btn").click(function () {
 
     let n = parseInt($("#no_of_disks").val());
-    toh = new TOH(n);
-    toh.CreateDisks();
+    if(n>10)
+    {
+        alert("As of now limit is for 10 Disks !");
+    }
+    else
+    {
+         toh = new TOH(n);
+         toh.CreateDisks();
 
-    toh.TowerObjectSet[0].TowerStack = Array.from(toh.DiskStack);
+         toh.TowerObjectSet[0].TowerStack = Array.from(toh.DiskStack);
 
-    toh.TowerObjectSet[0].UpdateTower();
+         toh.TowerObjectSet[0].UpdateTower();
 
-    $("#no_of_disks").attr("disabled", "true");
-    $("#create-btn").attr("disabled", "true");
+         $("#no_of_disks").attr("disabled", "true");
+         $("#create-btn").attr("disabled", "true");
+    }
+        
 
     $("#restart").click(function () {
         window.location.reload();
